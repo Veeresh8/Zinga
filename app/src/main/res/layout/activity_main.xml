@@ -3,32 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@color/colorMainDark"
+    android:orientation="vertical"
     tools:context="com.example.veeresh.zinga.MainActivity">
 
-
-    <EditText
-        android:id="@+id/edt_name"
-        android:layout_margin="10dp"
-        android:hint="Name"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/MyToolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="?colorPrimary"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="Zinga" />
 
-
-    <EditText
-        android:id="@+id/edt_password"
-        android:layout_margin="10dp"
-        android:text="Password"
-        android:inputType="textPassword"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_upcoming"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/done"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:text="Done"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

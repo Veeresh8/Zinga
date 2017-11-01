@@ -4,11 +4,9 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
-import com.example.veeresh.zinga.APIService;
-import com.example.veeresh.zinga.LoginRespository;
-import com.example.veeresh.zinga.MoviesRepositoryImpl;
-import com.example.veeresh.zinga.ZingaDatabase;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.veeresh.zinga.database.ZingaDatabase;
+import com.example.veeresh.zinga.network.APIService;
+import com.example.veeresh.zinga.upcomingMovies.MoviesRepository;
 
 import dagger.Module;
 import dagger.Provides;
@@ -23,21 +21,8 @@ public class ZingaDatabaseModule {
 
     @Provides
     @ZingaApplicationScope
-    MoviesRepositoryImpl moviesRepository(ZingaDatabase zingaDatabase, APIService apiService) {
-        return new MoviesRepositoryImpl(zingaDatabase, apiService);
-    }
-
-    @Provides
-    @ZingaApplicationScope
-    FirebaseAuth firebaseAuth(){
-        return FirebaseAuth.getInstance();
-    }
-
-
-    @Provides
-    @ZingaApplicationScope
-    LoginRespository loginRespository(Context context, FirebaseAuth firebaseAuth){
-        return new LoginRespository(firebaseAuth, context);
+    MoviesRepository moviesRepository(ZingaDatabase zingaDatabase, APIService apiService) {
+        return new MoviesRepository(zingaDatabase, apiService);
     }
 
     @Provides
@@ -48,7 +33,7 @@ public class ZingaDatabaseModule {
 
     @Provides
     @ZingaApplicationScope
-    ViewModelProvider.Factory provideViewModelFactory(MoviesRepositoryImpl moviesRepository, LoginRespository loginRespository){
-        return new CustomViewModelFactory(moviesRepository, loginRespository);
+    ViewModelProvider.Factory provideViewModelFactory(MoviesRepository moviesRepository){
+        return new CustomViewModelFactory(moviesRepository);
     }
 }

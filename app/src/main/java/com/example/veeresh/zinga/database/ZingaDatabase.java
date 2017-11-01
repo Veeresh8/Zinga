@@ -1,4 +1,4 @@
-package com.example.veeresh.zinga;
+package com.example.veeresh.zinga.database;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;

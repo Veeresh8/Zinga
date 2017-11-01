@@ -1,10 +1,8 @@
-package com.example.veeresh.zinga;
+package com.example.veeresh.zinga.upcomingMovies;
 
-import android.arch.persistence.room.Embedded;
-import android.arch.persistence.room.Entity;
+import com.example.veeresh.zinga.database.Movies;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by veeresh on 10/25/17.

@@ -1,13 +1,11 @@
-package com.example.veeresh.zinga;
+package com.example.veeresh.zinga.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
-import android.graphics.Movie;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

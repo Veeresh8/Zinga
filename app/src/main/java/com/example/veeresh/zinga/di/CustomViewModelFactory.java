@@ -5,10 +5,8 @@ package com.example.veeresh.zinga.di;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.example.veeresh.zinga.LoginRespository;
-import com.example.veeresh.zinga.LoginViewModel;
-import com.example.veeresh.zinga.MoviesRepositoryImpl;
-import com.example.veeresh.zinga.UpcomingMoviesViewModel;
+import com.example.veeresh.zinga.upcomingMovies.MoviesRepository;
+import com.example.veeresh.zinga.upcomingMovies.UpcomingMoviesViewModel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -16,13 +14,12 @@ import javax.inject.Singleton;
 
 @Singleton
 public class CustomViewModelFactory implements ViewModelProvider.Factory {
-    private final MoviesRepositoryImpl moviesRepository;
-    private final LoginRespository loginRespository;
+    private final MoviesRepository moviesRepository;
 
     @Inject
-    public CustomViewModelFactory(MoviesRepositoryImpl moviesRepository, LoginRespository loginRespository) {
+    public CustomViewModelFactory(MoviesRepository moviesRepository) {
         this.moviesRepository = moviesRepository;
-        this.loginRespository = loginRespository;
+
     }
 
     @Override
@@ -30,8 +27,8 @@ public class CustomViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(UpcomingMoviesViewModel.class))
         return (T) new UpcomingMoviesViewModel(moviesRepository);
 
-        else if (modelClass.isAssignableFrom(LoginViewModel.class))
-        return (T) new LoginViewModel(loginRespository);
+//        else if (modelClass.isAssignableFrom(LoginViewModel.class))
+//        return (T) new LoginViewModel(loginRespository);
 //
 //        else if (modelClass.isAssignableFrom(NewListItemViewModel.class))
 //        return (T) new NewListItemViewModel(repository);

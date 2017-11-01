@@ -1,7 +1,8 @@
-package com.example.veeresh.zinga;
+package com.example.veeresh.zinga.network;
+
+import com.example.veeresh.zinga.upcomingMovies.UpcomingMovies;
 
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

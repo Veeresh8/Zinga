@@ -1,4 +1,4 @@
-package com.example.veeresh.zinga;
+package com.example.veeresh.zinga.network;
 
 /**
  * Created by veeresh on 10/26/17.

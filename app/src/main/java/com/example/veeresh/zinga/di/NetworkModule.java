@@ -2,7 +2,7 @@ package com.example.veeresh.zinga.di;
 
 import android.content.Context;
 
-import com.example.veeresh.zinga.APIService;
+import com.example.veeresh.zinga.network.APIService;
 import com.example.veeresh.zinga.BuildConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

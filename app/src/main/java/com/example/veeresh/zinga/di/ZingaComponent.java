@@ -1,7 +1,7 @@
 package com.example.veeresh.zinga.di;
 
 import com.example.veeresh.zinga.MainActivity;
-import com.example.veeresh.zinga.UpcomingMoviesViewModel;
+import com.example.veeresh.zinga.upcomingMovies.UpcomingMoviesViewModel;
 
 import dagger.Component;
 
