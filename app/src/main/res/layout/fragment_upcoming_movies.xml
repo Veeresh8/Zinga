@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorMainDark">
+    android:background="@color/colorMainDark"
+    android:orientation="vertical">
 
 
     <android.support.v7.widget.Toolbar
@@ -16,29 +15,36 @@
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <ImageView
-            android:id="@+id/action_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:padding="10dp"
-            android:src="@drawable/ic_arrow_back_black_24dp" />
-
-
         <TextView
             android:id="@+id/header"
-            tools:text="Sort By"
-            android:textSize="16sp"
-            android:layout_marginStart="24dp"
-            android:textColor="@color/colorMainDark"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Zinga"
+            android:textColor="@color/colorMainDark"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/action_favorites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:padding="10dp"
+            android:src="@drawable/ic_favorite_black_24dp" />
+
+
+        <ImageView
+            android:id="@+id/action_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:padding="10dp"
+            android:src="@drawable/ic_sort_black_24dp" />
 
     </android.support.v7.widget.Toolbar>
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_sorted_movies"
+        android:id="@+id/rv_upcoming"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

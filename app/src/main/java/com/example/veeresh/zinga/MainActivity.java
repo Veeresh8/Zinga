@@ -1,150 +1,70 @@
 package com.example.veeresh.zinga;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.RadioGroup;
 
 import com.example.veeresh.zinga.database.Movies;
-import com.example.veeresh.zinga.database.ZingaDatabase;
-import com.example.veeresh.zinga.upcomingMovies.UpcomingMoviesViewModel;
+import com.example.veeresh.zinga.upcomingMovies.FavoritesFragment;
+import com.example.veeresh.zinga.upcomingMovies.UpcomingMoviesFragment;
+import com.example.veeresh.zinga.utitlities.ActivityUtils;
 
 import java.util.ArrayList;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, MoviesAdapter.FavoriteCheck {
+public class MainActivity extends AppCompatActivity implements UpcomingMoviesFragment.FragmentDelegate {
 
 
-    @BindView(R.id.rv_upcoming)
-    RecyclerView recyclerView;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.fragment_container)
     FrameLayout fragmentContainer;
 
-    private MoviesAdapter adapter;
     public static final String SORT_KEY = "sort_key";
+    public static final String MOVIES_LIST = "movies_list";
+    public static final String SORTED_FRAGMENT = "sorted_fragment";
+    public static final String FAVORITE_FRAGMENT = "favorite_fragment";
 
-    private UpcomingMoviesViewModel upcomingMoviesViewModel;
+    private UpcomingMoviesFragment upcomingMoviesFragment;
 
-    @Inject
-    ViewModelProvider.Factory viewModelFactory;
-    @Inject
-    SharedPreferences sharedPreferences;
-    @Inject
-    ZingaDatabase zingaDatabase;
-
-    private static final int SORT_TYPE_TIMESTAMP = 0;
-    private static final int SORT_TYPE_TITLE = 1;
-    private static final int SORT_TYPE_VOTES = 2;
-    private static final int SORT_TYPE_POPULARITY = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        initUI();
-
-        ZingaApplication.getInstance().getZingaComponent().inject(this);
-
-        upcomingMoviesViewModel = ViewModelProviders.of(this, viewModelFactory).get(UpcomingMoviesViewModel.class);
-
-
-        upcomingMoviesViewModel.getMoviesLiveData(1).observe(this, new Observer<ArrayList<Movies>>() {
-            @Override
-            public void onChanged(@Nullable ArrayList<Movies> moviesArrayList) {
-                adapter.addMovies(moviesArrayList);
-            }
-        });
-
+        initFragment();
     }
 
-    private void initUI() {
-        toolbar.inflateMenu(R.menu.main_menu);
-        toolbar.setOnMenuItemClickListener(this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MoviesAdapter(this, this);
-        recyclerView.setAdapter(adapter);
+    private void initFragment() {
+        if (upcomingMoviesFragment == null) {
+            upcomingMoviesFragment = new UpcomingMoviesFragment();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), upcomingMoviesFragment, R.id.fragment_container);
+        }
     }
-
 
     @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_sort:
-                showSortOptions();
-                return true;
-        }
-        return true;
-    }
-
-    private void showSortOptions() {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        View sheetView = this.getLayoutInflater().inflate(R.layout.bottom_sheet_sort_options, null);
-        bottomSheetDialog.setContentView(sheetView);
-
-        RadioGroup radioGroup = sheetView.findViewById(R.id.rb_group);
-        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            switch (checkedId) {
-                case R.id.rb_title:
-                    addFragment(SORT_TYPE_TITLE);
-                    bottomSheetDialog.dismiss();
-                    break;
-                case R.id.rb_popularity:
-                    addFragment(SORT_TYPE_POPULARITY);
-                    bottomSheetDialog.dismiss();
-                    break;
-                case R.id.rb_votes:
-                    addFragment(SORT_TYPE_VOTES);
-                    bottomSheetDialog.dismiss();
-                    break;
-                case R.id.rb_recent:
-                    addFragment(SORT_TYPE_TIMESTAMP);
-                    bottomSheetDialog.dismiss();
-                    break;
-
-            }
-        });
-        bottomSheetDialog.show();
-
-
-    }
-
-    private void addFragment(int sortKey) {
+    public void addFragment(int sortType, ArrayList<Movies> moviesArrayList) {
         Bundle bundle = new Bundle();
-        bundle.putInt(SORT_KEY, sortKey);
+        bundle.putInt(SORT_KEY, sortType);
+        bundle.putParcelableArrayList(MOVIES_LIST, moviesArrayList);
 
         SortedOptionsFragment sortedOptionsFragment = new SortedOptionsFragment();
         sortedOptionsFragment.setArguments(bundle);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, sortedOptionsFragment).addToBackStack(null).commit();
-    }
-
-
-    @Override
-    public void addToFavorites(Movies movie) {
-        upcomingMoviesViewModel.addToFavorites(movie);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, sortedOptionsFragment, SORTED_FRAGMENT)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
-    public void removeFromFavorites(Movies movie) {
-        upcomingMoviesViewModel.removeFromFavorites(movie);
+    public void addFavoriteFragment() {
+        FavoritesFragment favoritesFragment = new FavoritesFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, favoritesFragment, FAVORITE_FRAGMENT)
+                .addToBackStack(null)
+                .commit();
     }
 }

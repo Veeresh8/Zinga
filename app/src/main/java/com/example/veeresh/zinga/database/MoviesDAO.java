@@ -6,6 +6,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,9 @@ public interface MoviesDAO {
 
     @Query("SELECT * FROM Movies WHERE id =:id")
     LiveData<Movies> getMovie(long id);
+
+    @Query("SELECT * FROM Movies WHERE isFavorite =:bool")
+    LiveData<List<Movies>> getFavoriteMovies(Boolean bool);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveMovies(List<Movies> movies);

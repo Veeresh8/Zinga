@@ -2,6 +2,8 @@ package com.example.veeresh.zinga.database;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +15,7 @@ import java.util.Date;
  */
 
 @Entity
-public class Movies {
+public class Movies implements Parcelable {
 
     @PrimaryKey
     private long id;
@@ -214,4 +216,51 @@ public class Movies {
         result = 31 * result + (isFavorite ? 1 : 0);
         return result;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeLong(this.vote_count);
+        dest.writeDouble(this.vote_average);
+        dest.writeString(this.title);
+        dest.writeDouble(this.popularity);
+        dest.writeString(this.poster_path);
+        dest.writeString(this.overview);
+        dest.writeString(this.release_date);
+        dest.writeLong(this.timestamp);
+        dest.writeByte(this.isFavorite ? (byte) 1 : (byte) 0);
+    }
+
+    public Movies() {
+    }
+
+    protected Movies(Parcel in) {
+        this.id = in.readLong();
+        this.vote_count = in.readLong();
+        this.vote_average = in.readDouble();
+        this.title = in.readString();
+        this.popularity = in.readDouble();
+        this.poster_path = in.readString();
+        this.overview = in.readString();
+        this.release_date = in.readString();
+        this.timestamp = in.readLong();
+        this.isFavorite = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<Movies> CREATOR = new Parcelable.Creator<Movies>() {
+        @Override
+        public Movies createFromParcel(Parcel source) {
+            return new Movies(source);
+        }
+
+        @Override
+        public Movies[] newArray(int size) {
+            return new Movies[size];
+        }
+    };
 }

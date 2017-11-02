@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
  */
 
 
-public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
+public class MoviesSortedAdapter extends RecyclerView.Adapter<MoviesSortedAdapter.ViewHolder> {
 
     private SortedList<Movies> moviesSortedList;
     private Context context;
@@ -46,7 +46,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private SimpleDateFormat expectedSimpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
 
-    public MoviesAdapter(Context context, FavoriteCheck favoriteCheck) {
+    public MoviesSortedAdapter(Context context, FavoriteCheck favoriteCheck) {
         this.context = context;
         this.favoriteCheck = favoriteCheck;
         this.moviesSortedList = new SortedList<>(Movies.class, new SortedListAdapterCallback<Movies>(this) {
@@ -57,12 +57,32 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
             @Override
             public boolean areContentsTheSame(Movies oldItem, Movies newItem) {
-                return oldItem.equals(newItem);
+                return oldItem.getTitle().equals(newItem.getTitle());
+            }
+
+            @Override
+            public void onInserted(int position, int count) {
+                notifyItemRangeInserted(position, count);
+            }
+
+            @Override
+            public void onRemoved(int position, int count) {
+                notifyItemRangeRemoved(position, count);
+            }
+
+            @Override
+            public void onMoved(int fromPosition, int toPosition) {
+                notifyItemMoved(fromPosition, toPosition);
+            }
+
+            @Override
+            public void onChanged(int position, int count) {
+                notifyItemRangeChanged(position, count);
             }
 
             @Override
             public boolean areItemsTheSame(Movies item1, Movies item2) {
-                return item1 == item2;
+                return item1.getId() == item2.getId();
             }
         });
     }
@@ -95,26 +115,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         return moviesSortedList.size();
     }
 
-    public void removeMovie(Movies movie) {
-        moviesSortedList.beginBatchedUpdates();
-        moviesSortedList.remove(movie);
-        moviesSortedList.endBatchedUpdates();
-    }
 
-    public void addFavoriteMovie(List<Movies> moviesList) {
-
+    public void addMoviesList(List<Movies> movies) {
         for (int i = 0; i < moviesSortedList.size(); i++) {
-            moviesSortedList.get(i).setFavorite(false);
-        }
-
-        for (int i = 0; i < moviesSortedList.size(); i++) {
-            for (int j = 0; j < moviesList.size(); j++) {
-                if (moviesSortedList.get(i).getId() == moviesList.get(j).getId())
-                    moviesSortedList.get(i).setFavorite(moviesList.get(j).isFavorite());
+            if (!moviesSortedList.get(i).isFavorite()) {
+                moviesSortedList.removeItemAt(i);
             }
         }
-
-        notifyDataSetChanged();
+        moviesSortedList.addAll(movies);
 
     }
 

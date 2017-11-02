@@ -2,12 +2,7 @@ package com.example.veeresh.zinga.upcomingMovies;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
-import com.bumptech.glide.load.engine.Resource;
-import com.example.veeresh.zinga.NetworkBoundResource;
 import com.example.veeresh.zinga.network.APIService;
 import com.example.veeresh.zinga.network.Config;
 import com.example.veeresh.zinga.database.Movies;
@@ -22,9 +17,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
 
 /**
  * Created by veeresh on 10/25/17.
@@ -73,6 +66,11 @@ public class MoviesRepository {
                     }
                 });
         return data;
+    }
+
+
+    public LiveData<List<Movies>> getFavoriteMovies() {
+        return zingaDatabase.moviesDAO().getFavoriteMovies(true);
     }
 
     public Completable addToFavorites(Movies movie) {

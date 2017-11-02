@@ -1,6 +1,9 @@
 package com.example.veeresh.zinga.di;
 
 import com.example.veeresh.zinga.MainActivity;
+import com.example.veeresh.zinga.SortedOptionsFragment;
+import com.example.veeresh.zinga.upcomingMovies.FavoritesFragment;
+import com.example.veeresh.zinga.upcomingMovies.UpcomingMoviesFragment;
 import com.example.veeresh.zinga.upcomingMovies.UpcomingMoviesViewModel;
 
 import dagger.Component;
@@ -10,13 +13,17 @@ import dagger.Component;
  */
 
 @ZingaApplicationScope
-@Component(modules = { NetworkModule.class, SharedPreferencesModule.class, GlideModule.class, ZingaDatabaseModule.class })
+@Component(modules = {NetworkModule.class, SharedPreferencesModule.class, GlideModule.class, ZingaDatabaseModule.class})
 public interface ZingaComponent {
 
     void inject(UpcomingMoviesViewModel upcomingMoviesViewModel);
+
+    void inject(SortedOptionsFragment sortedOptionsFragment);
+
     void inject(MainActivity mainActivity);
 
-    interface Injectable {
-        void inject(ZingaComponent zingaComponent);
-    }
+    void inject(UpcomingMoviesFragment upcomingMoviesFragment);
+
+    void inject(FavoritesFragment favoritesFragment);
+
 }
