@@ -1,10 +1,8 @@
 package com.example.veeresh.zinga.di;
 
 import com.example.veeresh.zinga.MainActivity;
-import com.example.veeresh.zinga.SortedOptionsFragment;
-import com.example.veeresh.zinga.upcomingMovies.FavoritesFragment;
-import com.example.veeresh.zinga.upcomingMovies.UpcomingMoviesFragment;
-import com.example.veeresh.zinga.upcomingMovies.UpcomingMoviesViewModel;
+import com.example.veeresh.zinga.upcomingMovies.AlgoliaFragment;
+import com.example.veeresh.zinga.upcomingMovies.AlgoliaViewModel;
 
 import dagger.Component;
 
@@ -16,14 +14,11 @@ import dagger.Component;
 @Component(modules = {NetworkModule.class, SharedPreferencesModule.class, GlideModule.class, ZingaDatabaseModule.class})
 public interface ZingaComponent {
 
-    void inject(UpcomingMoviesViewModel upcomingMoviesViewModel);
-
-    void inject(SortedOptionsFragment sortedOptionsFragment);
+    void inject(AlgoliaViewModel upcomingMoviesViewModel);
 
     void inject(MainActivity mainActivity);
 
-    void inject(UpcomingMoviesFragment upcomingMoviesFragment);
+    void inject(AlgoliaFragment upcomingMoviesFragment);
 
-    void inject(FavoritesFragment favoritesFragment);
 
 }

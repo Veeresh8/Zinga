@@ -1,51 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorMainDark"
     android:orientation="vertical">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
+        android:id="@+id/input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimaryDark"
-        android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        android:orientation="horizontal"
+        android:weightSum="1">
 
-        <TextView
-            android:id="@+id/header"
+        <EditText
+            android:id="@+id/edt_input_query"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/done"
+            android:hint="Search"
+            android:padding="10dp" />
+
+        <Button
+            android:id="@+id/done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zinga"
-            android:textColor="@color/colorMainDark"
-            android:textSize="16sp" />
+            android:layout_alignParentEnd="true"
+            android:text="Done" />
 
-        <ImageView
-            android:id="@+id/action_favorites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:padding="10dp"
-            android:src="@drawable/ic_favorite_black_24dp" />
-
-
-        <ImageView
-            android:id="@+id/action_sort"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:padding="10dp"
-            android:src="@drawable/ic_sort_black_24dp" />
-
-    </android.support.v7.widget.Toolbar>
+    </RelativeLayout>
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_upcoming"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/input_layout"
+        android:layout_marginTop="10dp" />
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/progress"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>

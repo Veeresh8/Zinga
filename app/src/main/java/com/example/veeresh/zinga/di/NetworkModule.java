@@ -26,7 +26,7 @@ import timber.log.Timber;
 @Module(includes = ContextModule.class)
 public class NetworkModule {
 
-    private static final String BASE_URL = "https://api.themoviedb.org/";
+    private static final String BASE_URL = "http://hn.algolia.com/";
 
     @Provides
     @ZingaApplicationScope
