@@ -1,2 +1,2 @@
 # Zinga
-Android app with photo filters are some cool animations
+Android app with photo filters and some cool animations
